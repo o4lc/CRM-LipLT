@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=20
 mkdir scriptResults
 rm scriptResults/timedEvents.txt
@@ -13,7 +13,7 @@ for architecture in ${architectures[*]}; do
     --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1 --robustStartingEpoch -1 --criterionType\
      certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax --radiusMaximizationAlpha 5\
       --radiusMaximizationMaximumPenalizingRadius 0.2 --radiusMaximizationInitialLambda 15 --smallestLearningRate 1e-6\
-       --device cuda:0 --projectName $deviceName --timeEvents
+       --device cuda:0 --projectName $projectName --timeEvents
 done
 
 # naive
@@ -23,7 +23,7 @@ for architecture in ${architectures[*]}; do
     --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1 --robustStartingEpoch -1 --criterionType\
      certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax --radiusMaximizationAlpha 5\
       --radiusMaximizationMaximumPenalizingRadius 0.2 --radiusMaximizationInitialLambda 15 --smallestLearningRate 1e-6\
-       --device cuda:0 --projectName $deviceName --timeEvents --modelLipschitzType naive
+       --device cuda:0 --projectName $projectName --timeEvents --modelLipschitzType naive
 done
 
 # standard training
@@ -31,5 +31,5 @@ for architecture in ${architectures[*]}; do
   python train.py  --dataset CIFAR10 --architecture $architecture --batchSize 512 --maxEpoch $maxEpoch\
    --initialLearningRate 1e-3 --learningRateDecayEpoch 25 --datasetAugmentationDegree 10\
     --datasetAugmentationTranslation 0.1 --criterionType standard --smallestLearningRate 1e-6 --device cuda:0\
-     --projectName $deviceName --timeEvents --modelLipschitzType naive
+     --projectName $projectName --timeEvents --modelLipschitzType naive
 done

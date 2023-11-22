@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=300
 architecture="8C2F"
 numberOfPowerIterations=5
@@ -28,7 +28,7 @@ if [ $experimentNumber -le 3 ]; then
      10 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha $defaultAlpha --radiusMaximizationMaximumPenalizingRadius $defaultR0\
        --radiusMaximizationInitialLambda ${lambdaValues[$experimentNumber]} --smallestLearningRate 1e-7 --device cuda:0\
-        --projectName $deviceName --saveAccuracies --accuracyFileName $fileName
+        --projectName $projectName --saveAccuracies --accuracyFileName $fileName
 elif [ $experimentNumber -le 5 ]; then
   python train.py  --dataset tiny-imagenet --architecture $architecture --batchSize 256 --maxEpoch 300\
    --initialLearningRate 1e-4 --learningRateDecayEpoch 100 --pairwiseLipschitz --numberOfPowerIterations\
@@ -37,7 +37,7 @@ elif [ $experimentNumber -le 5 ]; then
       --radiusMaximizationAlpha $defaultAlpha\
        --radiusMaximizationMaximumPenalizingRadius ${r0Values[$(expr ${experimentNumber} - 4)]}\
         --radiusMaximizationInitialLambda $defaultLambda --smallestLearningRate 1e-7 --device cuda:0 --projectName\
-         $deviceName --saveAccuracies --accuracyFileName $fileName
+         $projectName --saveAccuracies --accuracyFileName $fileName
 else
   python train.py  --dataset tiny-imagenet --architecture $architecture --batchSize 256 --maxEpoch 300\
    --initialLearningRate 1e-4 --learningRateDecayEpoch 100 --pairwiseLipschitz --numberOfPowerIterations\
@@ -46,6 +46,6 @@ else
       --radiusMaximizationAlpha ${alphaValues[$(expr ${experimentNumber} - 6)]}\
        --radiusMaximizationMaximumPenalizingRadius $defaultR0\
         --radiusMaximizationInitialLambda ${alphaLambdaValues[$(expr ${experimentNumber} - 6)]}\
-         --smallestLearningRate 1e-7 --device cuda:0 --projectName $deviceName --saveAccuracies\
+         --smallestLearningRate 1e-7 --device cuda:0 --projectName $projectName --saveAccuracies\
           --accuracyFileName $fileName
 fi

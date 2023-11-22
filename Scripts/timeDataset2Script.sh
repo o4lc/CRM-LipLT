@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=20
 timeFileName="timeDataset4.txt"
 mkdir scriptResults
@@ -18,7 +18,7 @@ for i in {2..2}; do
     --numberOfPowerIterations 5 --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1\
      --robustStartingEpoch -1 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha 5 --radiusMaximizationMaximumPenalizingRadius 0.2 --radiusMaximizationInitialLambda 15\
-       --smallestLearningRate 1e-6 --device cuda:0 --projectName $deviceName --timeEvents --timeFileName $timeFileName
+       --smallestLearningRate 1e-6 --device cuda:0 --projectName $projectName --timeEvents --timeFileName $timeFileName
 done
 # naive
 for i in {2..2}; do
@@ -27,7 +27,7 @@ for i in {2..2}; do
     --numberOfPowerIterations 5 --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1\
      --robustStartingEpoch -1 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha 5 --radiusMaximizationMaximumPenalizingRadius 0.2 --radiusMaximizationInitialLambda 15\
-       --smallestLearningRate 1e-6 --device cuda:0 --projectName $deviceName --timeEvents --modelLipschitzType naive\
+       --smallestLearningRate 1e-6 --device cuda:0 --projectName $projectName --timeEvents --modelLipschitzType naive\
         --timeFileName $timeFileName
 done
 
@@ -37,5 +37,5 @@ for i in {2..2}; do
    --maxEpoch $maxEpoch --initialLearningRate 1e-3 --learningRateDecayEpoch 25 --pairwiseLipschitz\
     --numberOfPowerIterations 5 --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1\
      --robustStartingEpoch -1 --criterionType standard --smallestLearningRate 1e-6 --device cuda:0\
-      --projectName $deviceName --timeEvents --modelLipschitzType naive --timeFileName $timeFileName
+      --projectName $projectName --timeEvents --modelLipschitzType naive --timeFileName $timeFileName
 done

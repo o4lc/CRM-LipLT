@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=300
 architecture="6C2F"
 mkdir scriptResults
@@ -25,7 +25,7 @@ for lambdaValue in ${lambdaValues[*]}; do
      --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha $defaultAlpha --radiusMaximizationMaximumPenalizingRadius $defaultR0\
        --radiusMaximizationInitialLambda $lambdaValue --smallestLearningRate 1e-6 --device cuda:0 --projectName\
-        $deviceName --saveAccuracies --accuracyFileName $fileName
+        $projectName --saveAccuracies --accuracyFileName $fileName
 done
 
 for r0Value in ${r0Values[*]}; do
@@ -35,7 +35,7 @@ for r0Value in ${r0Values[*]}; do
      --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha $defaultAlpha --radiusMaximizationMaximumPenalizingRadius $r0Value\
        --radiusMaximizationInitialLambda $defaultLambda --smallestLearningRate 1e-6 --device cuda:0 --projectName\
-        $deviceName --saveAccuracies --accuracyFileName $fileName
+        $projectName --saveAccuracies --accuracyFileName $fileName
 done
 for i in {0..7}; do
   python train.py  --dataset CIFAR10 --architecture $architecture --batchSize 512 --maxEpoch $maxEpoch\
@@ -44,6 +44,6 @@ for i in {0..7}; do
      --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha ${alphaValues[$i]} --radiusMaximizationMaximumPenalizingRadius $defaultR0\
        --radiusMaximizationInitialLambda ${alphaLambdaValues[$i]} --smallestLearningRate 1e-6 --device cuda:0\
-        --projectName $deviceName --saveAccuracies --accuracyFileName $fileName
+        --projectName $projectName --saveAccuracies --accuracyFileName $fileName
 done
 

@@ -22,7 +22,6 @@ from Losses.LossConfigurations import getCriterionConfiguration, createCriterion
 
 torch.autograd.set_detect_anomaly(True)
 from Networks.NetworkArchitectures import getNetworkArchitecture, createNetwork
-from tqdm import tqdm
 # from torchviz import make_dot, make_dot_from_trace
 
 
@@ -281,7 +280,7 @@ def main(args):
     iterationTimes = []
     lipschitzTimes = []
     startTime = time.time()
-    for currentEpoch in tqdm(range(currentEpoch, maxEpoch)):
+    for currentEpoch in range(currentEpoch, maxEpoch):
         wandb.log({"epoch": currentEpoch})
         if np.mod(currentEpoch, validationStep) == 0:
             loopPhases = ["train", 'eval']
@@ -521,7 +520,7 @@ def pureLipschitzCalculation(args):
     net.to(device)
     lipschitzTimes = []
     with torch.no_grad():
-        for _ in tqdm(range(maxEpoch)):
+        for _ in range(maxEpoch):
             lipschitzStartEvent = torch.cuda.Event(enable_timing=True)
             lipschitzEndEvent = torch.cuda.Event(enable_timing=True)
 

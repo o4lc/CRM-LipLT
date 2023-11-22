@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=10000
 timeFileName="timeDataset3.txt"
 mkdir scriptResults
@@ -18,7 +18,7 @@ for i in {0..2}; do
     --numberOfPowerIterations 5 --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1\
      --robustStartingEpoch -1 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType\
       softMax --radiusMaximizationAlpha 5 --radiusMaximizationMaximumPenalizingRadius 0.2\
-       --radiusMaximizationInitialLambda 15 --smallestLearningRate 1e-6 --device cuda:0 --projectName $deviceName\
+       --radiusMaximizationInitialLambda 15 --smallestLearningRate 1e-6 --device cuda:0 --projectName $projectName\
         --timeEvents --timeFileName $timeFileName --pureLipschitzCalculation
 done
 # naive
@@ -28,7 +28,7 @@ for i in {0..2}; do
     --numberOfPowerIterations 5 --datasetAugmentationDegree 10 --datasetAugmentationTranslation 0.1\
      --robustStartingEpoch -1 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha 5 --radiusMaximizationMaximumPenalizingRadius 0.2 --radiusMaximizationInitialLambda 15\
-       --smallestLearningRate 1e-6 --device cuda:0 --projectName $deviceName --timeEvents --modelLipschitzType naive\
+       --smallestLearningRate 1e-6 --device cuda:0 --projectName $projectName --timeEvents --modelLipschitzType naive\
         --timeFileName $timeFileName --pureLipschitzCalculation
 done
 

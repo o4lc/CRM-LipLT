@@ -1,7 +1,7 @@
 #! /bin/bash
 set -x
-echo Enter the name of the device used for project names:
-read deviceName
+echo Enter a name for the project, used for checkpoints and results:
+read projectName
 maxEpoch=300
 architecture="8C2F"
 mkdir scriptResults
@@ -25,7 +25,7 @@ then
        --robustStartingEpoch 10 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
         --radiusMaximizationAlpha $defaultAlpha --radiusMaximizationMaximumPenalizingRadius $defaultR0\
          --radiusMaximizationInitialLambda $defaultLambda --smallestLearningRate 1e-7 --device cuda:0\
-          --projectName $deviceName --saveAccuracies  --accuracyFileName $fileName
+          --projectName $projectName --saveAccuracies  --accuracyFileName $fileName
   done
 else
   python train.py  --dataset tiny-imagenet --architecture $architecture --batchSize 256 --maxEpoch 300\
@@ -34,6 +34,6 @@ else
      10 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha $defaultAlpha --radiusMaximizationMaximumPenalizingRadius $defaultR0\
        --radiusMaximizationInitialLambda $defaultLambda --smallestLearningRate 1e-7 --device cuda:0 --projectName\
-        $deviceName --saveAccuracies  --accuracyFileName $fileName
+        $projectName --saveAccuracies  --accuracyFileName $fileName
 fi
 
