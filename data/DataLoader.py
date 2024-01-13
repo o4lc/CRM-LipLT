@@ -24,14 +24,14 @@ def createDataLoaders(dataset="MNIST", validationSplit=0.8, batchSize=1024, numb
     elif dataset == "CIFAR10":
         trainTransform = transforms.Compose(
             [transforms.ToTensor(),
-             #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
              transforms.RandomHorizontalFlip(),
              transforms.RandomAffine(degrees=degrees, translate=(translation, translation))
              ])
 
         testTransform = transforms.Compose(
             [transforms.ToTensor(),
-             #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
              ])
         trainSet = torchvision.datasets.CIFAR10(root='./data', train=True,
                                                 download=True, transform=trainTransform)
@@ -42,14 +42,14 @@ def createDataLoaders(dataset="MNIST", validationSplit=0.8, batchSize=1024, numb
     elif dataset == "CIFAR100":
         trainTransform = transforms.Compose(
             [transforms.ToTensor(),
-             #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
              transforms.RandomHorizontalFlip(),
              transforms.RandomAffine(degrees=degrees, translate=(translation, translation))
              ])
 
         testTransform = transforms.Compose(
             [transforms.ToTensor(),
-             #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
              ])
         trainSet = torchvision.datasets.CIFAR100(root='./data', train=True,
                                                 download=True, transform=trainTransform)
