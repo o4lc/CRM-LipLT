@@ -28,7 +28,7 @@ We'll provide sample commands for training models on MNIST and CIFAR-10 below:
 ```bash
 python train.py  --dataset MNIST --architecture 4C3F --batchSize 512\
    --maxEpoch 400 --initialLearningRate 1e-3 --learningRateDecayEpoch 25 --pairwiseLipschitz\
-    --numberOfPowerIterations 10 --datasetAugmentationDegree 0. --datasetAugmentationTranslation 0.\
+    --numberOfPowerIterations 10 --datasetAugmentationDegree 0 --datasetAugmentationTranslation 0. --test_eps 1.58\
      --robustStartingEpoch 10 --criterionType certifiedRadiusMaximization --radiusMaximizationRobustLossType softMax\
       --radiusMaximizationAlpha 5 --radiusMaximizationMaximumPenalizingRadius 2.2 --radiusMaximizationInitialLambda 30\
        --smallestLearningRate 1e-6 --device cuda:0 --projectName home
